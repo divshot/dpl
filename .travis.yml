@@ -4,7 +4,6 @@ rvm:
 - 2.0.0
 - jruby-19mode
 - rbx-19mode
-script: ruby -S rspec
 deploy:
   provider: rubygems
   api_key:

@@ -1,1 +1,1 @@
-task(:default) { ruby '-S rspec' }
+task(:default) { ruby '-S rspec spec' }
