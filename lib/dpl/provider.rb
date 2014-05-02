@@ -5,30 +5,32 @@ module DPL
   class Provider
     include FileUtils
 
-    autoload :Heroku,       'dpl/provider/heroku'
-    autoload :Appfog,       'dpl/provider/appfog'
-    autoload :EngineYard,   'dpl/provider/engine_yard'
-    autoload :DotCloud,     'dpl/provider/dot_cloud'
-    autoload :Nodejitsu,    'dpl/provider/nodejitsu'
-    autoload :Openshift,    'dpl/provider/openshift'
-    autoload :RubyGems,     'dpl/provider/rubygems'
-    autoload :NPM,          'dpl/provider/npm'
-    autoload :S3,           'dpl/provider/s3'
-    autoload :CloudControl, 'dpl/provider/cloudcontrol'
-    autoload :CloudFoundry, 'dpl/provider/cloud_foundry'
-    autoload :PyPI,         'dpl/provider/pypi'
-    autoload :Divshot,      'dpl/provider/divshot'
-    autoload :CloudFiles,   'dpl/provider/cloud_files'
-    autoload :OpsWorks,     'dpl/provider/ops_works'
-    autoload :Modulus,      'dpl/provider/modulus'
-    autoload :Releases,     'dpl/provider/releases'
-    autoload :Cloud66,      'dpl/provider/cloud66'
+    autoload :Heroku,           'dpl/provider/heroku'
+    autoload :Appfog,           'dpl/provider/appfog'
+    autoload :EngineYard,       'dpl/provider/engine_yard'
+    autoload :DotCloud,         'dpl/provider/dot_cloud'
+    autoload :Nodejitsu,        'dpl/provider/nodejitsu'
+    autoload :Openshift,        'dpl/provider/openshift'
+    autoload :RubyGems,         'dpl/provider/rubygems'
+    autoload :NPM,              'dpl/provider/npm'
+    autoload :S3,               'dpl/provider/s3'
+    autoload :CloudControl,     'dpl/provider/cloudcontrol'
+    autoload :CloudFoundry,     'dpl/provider/cloud_foundry'
+    autoload :PyPI,             'dpl/provider/pypi'
+    autoload :Divshot,          'dpl/provider/divshot'
+    autoload :CloudFiles,       'dpl/provider/cloud_files'
+    autoload :OpsWorks,         'dpl/provider/ops_works'
+    autoload :Modulus,          'dpl/provider/modulus'
+    autoload :Releases,         'dpl/provider/releases'
+    autoload :Cloud66,          'dpl/provider/cloud66'
+    autoload :ElasticBeanstalk, 'dpl/provider/elastic_beanstalk'
 
     def self.new(context, options)
       return super if self < Provider
 
       context.fold("Installing deploy dependencies") do
         name = super.option(:provider).to_s.downcase.gsub(/[^a-z0-9]/, '')
+        puts constants.inspect
         raise Error, 'could not find provider %p' % options[:provider] unless name = constants.detect { |c| c.to_s.downcase == name }
         const_get(name).new(context, options)
       end
